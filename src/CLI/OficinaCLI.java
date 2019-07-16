@@ -229,6 +229,7 @@ public class OficinaCLI {
     public void excluirOficina(Oficina oficina){
         try {
             oficinaDAO.excluir(oficina);
+            buscarOficina();
         } catch (SQLException ex) {
             Logger.getLogger(OficinaCLI.class.getName()).log(Level.SEVERE, null, ex);
         }

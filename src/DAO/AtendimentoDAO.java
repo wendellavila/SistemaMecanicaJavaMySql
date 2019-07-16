@@ -12,7 +12,7 @@ public class AtendimentoDAO {
     int id_atendimento, id_oficina;
     
     public void inserir(Atendimento atendimento) throws SQLException{
-       Connection con = BDFabricacaoConexao.getConnection(1); 
+       Connection con = BDFabricacaoConexao.getConnection(1);
 
        id_atendimento = atendimento.getId_atendimento();
        horario_atendimento = atendimento.getHorario_atendimento();

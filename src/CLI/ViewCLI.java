@@ -52,7 +52,7 @@ public class ViewCLI {
                 System.out.println("Placa do carro: " + entregas.getPlaca_carro());
                 System.out.println("Data de atendimento: " + entregas.getData_atendimento());
                 System.out.println("Data estimada de entrega: " + entregas.getData_entrega());
-                System.out.println("Tempo total estimado de serviços : " + entregas.getTempo_est_total());
+                System.out.println("Tempo total estimado de serviços : " + entregas.getTempo_est_total() + "dias");
                 System.out.println();
             }
             System.out.println("=====================================================================");
