@@ -2,7 +2,6 @@ package CLI;
 
 import main.*;
 import DAO.*;
-import main.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.*;
@@ -15,13 +14,11 @@ public class ClienteCLI {
     Scanner scan;
     ClienteDAO clienteDAO;
     CarroDAO carroDAO;
-    ClienteTelefoneDAO clienteTelefoneDAO;
     ClienteCarroDAO clienteCarroDAO;
     
     public ClienteCLI(){
         clienteDAO = new ClienteDAO();
         carroDAO = new CarroDAO();
-        clienteTelefoneDAO = new ClienteTelefoneDAO();
         clienteCarroDAO = new ClienteCarroDAO();
     }
     public void menuCliente(){
@@ -73,7 +70,10 @@ public class ClienteCLI {
         estado = scan.nextLine();
 
         try {
-            clienteDAO.inserir(new Cliente(cpf, nome, rua, bairro, num_casa, cidade, estado));
+            Cliente cliente = new Cliente(cpf, nome, rua, bairro, num_casa, cidade, estado);
+            clienteDAO.inserir(cliente);
+            System.out.println("Cliente adicionado com sucesso.");
+            exibirDadosCliente(cliente);
         } catch (SQLException ex) {
             System.out.println("Dados Inválidos.");
             this.adicionarCliente();
@@ -166,12 +166,7 @@ public class ClienteCLI {
         System.out.println("estado: " + cliente.getEstado());
         
         try {
-            ArrayList<ClienteTelefone> telefones = clienteTelefoneDAO.consultar(cliente.getCpf());
             ArrayList<ClienteCarros> listaCarros = clienteCarroDAO.consultar(cliente.getCpf());
-            System.out.println("Telefones:");
-            for(ClienteTelefone telefone : telefones){
-                System.out.println(telefone.getTelefone());
-            }
             System.out.println("Carros:");
             for(ClienteCarros itemCarro : listaCarros){
                 Carro carro = carroDAO.consultarPlaca(itemCarro.getPlaca());
@@ -189,7 +184,8 @@ public class ClienteCLI {
         System.out.println("====================== Alterar Cliente =============================");
         System.out.println(" 1 - Editar dados");
         System.out.println(" 2 - Adicionar carro");
-        System.out.println(" 3 - Voltar");
+        System.out.println(" 3 - Excluir");
+        System.out.println(" 4 - Voltar");
         System.out.println("====================================================================");
         int input = scan.nextInt();
         switch(input){
@@ -200,12 +196,23 @@ public class ClienteCLI {
                 adicionarCarro(cliente);
                 break;
             case 3:
+                excluirCliente(cliente);
+                break;
+            case 4:
                 menuCliente();
                 break;
             default:
                 System.out.println("Entrada Inválida.");
                 alterarCliente(cliente);
                 break;
+        }
+    }
+    
+    public void excluirCliente(Cliente cliente){
+        try {
+            clienteDAO.excluir(cliente);
+        } catch (SQLException ex) {
+            Logger.getLogger(OficinaCLI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

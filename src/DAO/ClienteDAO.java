@@ -114,4 +114,11 @@ public class ClienteDAO {
         Statement stm = con.createStatement();
         stm.executeUpdate(sql);
     }
+    
+    public void excluir(Cliente cliente) throws SQLException{
+        Connection con = BDFabricacaoConexao.getConnection(1);
+        String sql = "DELETE FROM cliente WHERE cpf_cliente=" + cliente.getCpf();
+        Statement stm = con.createStatement();
+        stm.executeUpdate(sql);
+    }
 }

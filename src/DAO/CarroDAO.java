@@ -68,4 +68,11 @@ public class CarroDAO {
         }   
         return carro; 
     }
+    
+    public void excluir(Carro carro) throws SQLException{
+        Connection con = BDFabricacaoConexao.getConnection(1);
+        String sql = "DELETE FROM carro WHERE placa=" + carro.getPlaca();
+        Statement stm = con.createStatement();
+        stm.executeUpdate(sql);
+    }
 }
